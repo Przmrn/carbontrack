@@ -1,0 +1,143 @@
+/* Registry module: hero pool, filter rows, sortable table, panels. */
+.reg-hero {
+  padding-top: 48px;
+  padding-bottom: 24px;
+}
+
+.reg-hero h1 {
+  margin: 12px 0 16px;
+  text-transform: uppercase;
+}
+
+.reg-hero-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.reg-intro {
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--muted);
+  max-width: 560px;
+  margin: 0;
+}
+
+.reg-pool {
+  background: var(--surface-white);
+  border: 1px solid var(--rule);
+  padding: 16px 24px;
+  min-width: 280px;
+}
+
+.reg-pool-value {
+  font-family: var(--font-mono);
+  font-size: 48px;
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  margin: 4px 0;
+}
+
+.reg-sbti {
+  position: relative;
+  height: 8px;
+  background: var(--rule);
+  margin: 12px 0 4px;
+}
+
+.reg-sbti span {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  background: var(--ink);
+}
+
+.reg-sbti i {
+  position: absolute;
+  top: -4px;
+  bottom: -4px;
+  width: 2px;
+  background: var(--vermilion);
+}
+
+.reg-filters-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 24px;
+  align-items: center;
+  padding: 12px 0;
+  border-top: 1px solid var(--rule);
+}
+
+.reg-sort {
+  background: none;
+  border: 0;
+  padding: 0;
+  font: inherit;
+  letter-spacing: inherit;
+  text-transform: inherit;
+  color: inherit;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.reg-bar {
+  display: block;
+  height: 6px;
+  background: var(--rule);
+  margin-top: 6px;
+  min-width: 80px;
+}
+
+.reg-bar span {
+  display: block;
+  height: 100%;
+  background: var(--ink);
+}
+
+.reg-panels {
+  margin-top: 48px;
+}
+
+.reg-cards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+  margin: 16px 0 48px;
+}
+
+.reg-cards > div {
+  background: var(--surface-white);
+  border: 1px solid var(--rule);
+  padding: 24px;
+}
+
+.reg-big {
+  font-family: var(--font-mono);
+  font-size: 48px;
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  margin: 8px 0;
+}
+
+.reg-hist {
+  width: 100%;
+  height: auto;
+  background: var(--surface-white);
+  border: 1px solid var(--rule);
+  margin: 16px 0 48px;
+}
+
+.reg-hist text {
+  font-family: var(--font-mono);
+  fill: var(--muted);
+}
+
+@media (max-width: 1023px) {
+  .reg-cards {
+    grid-template-columns: 1fr;
+  }
+}

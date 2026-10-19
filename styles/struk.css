@@ -1,0 +1,190 @@
+/* Struk Karbon input side: hero, sections, pills, mobile tab bar. */
+.struk-hero {
+  padding-top: 48px;
+  padding-bottom: 24px;
+}
+
+.struk-hero h1 {
+  margin: 16px 0;
+}
+
+.struk-hero-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.struk-intro {
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--muted);
+  max-width: 370px;
+  margin: 0;
+}
+
+.struk-hero-chips {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.struk-chipbox {
+  border: 1px solid var(--rule);
+  background: var(--surface-white);
+  padding: 12px 16px;
+}
+
+.struk-chipbox-dark {
+  background: var(--ink);
+  color: var(--surface-white);
+  border-color: var(--ink);
+}
+
+.struk-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: 24px;
+  align-items: start;
+}
+
+.struk-sec {
+  background: var(--surface-white);
+  border: 1px solid var(--rule);
+  padding: 24px;
+  margin: 0 0 24px;
+}
+
+.struk-sec-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.struk-sec-head > p {
+  margin: 0;
+}
+
+.struk-h {
+  font-size: 22px;
+  font-weight: 500;
+  letter-spacing: -0.015em;
+  margin: 0 0 16px;
+}
+
+.struk-chip {
+  background: var(--surface-inset);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  padding: 2px 6px;
+  white-space: nowrap;
+}
+
+.struk-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.struk-pills {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
+  margin: 12px 0 16px;
+}
+
+.struk-pills button {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  align-items: flex-start;
+  background: var(--surface-inset);
+  border: 1px solid var(--rule);
+  color: var(--ink);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  padding: 10px 12px;
+  min-height: 44px;
+  cursor: pointer;
+}
+
+.struk-pills button[aria-pressed="true"] {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--surface-white);
+}
+
+.struk-scale {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  color: var(--muted);
+  margin-top: 4px;
+}
+
+details.struk-sec summary {
+  cursor: pointer;
+  min-height: 44px;
+}
+
+.struk-tabbar {
+  display: none;
+}
+
+@media (max-width: 1023px) {
+  .struk-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .struk-pills {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 767px) {
+  .struk-root {
+    padding-bottom: 96px;
+  }
+
+  .struk-grid-2 {
+    grid-template-columns: 1fr;
+  }
+
+  .struk-pills {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .struk-tabbar {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--surface-white);
+    border-top: 1px solid var(--ink);
+    z-index: 60;
+  }
+
+  .struk-tabbar a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 48px;
+    color: var(--ink);
+    text-decoration: none;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    border-left: 1px solid var(--rule);
+  }
+
+  .struk-tabbar a:first-child {
+    border-left: 0;
+  }
+}

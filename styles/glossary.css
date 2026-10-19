@@ -1,0 +1,27 @@
+/* Glossary page: hero block and one table per group. */
+.glossary-hero {
+  padding: 48px 0 24px;
+  max-width: 720px;
+}
+
+.glossary-hero h1 {
+  margin: 8px 0 16px;
+}
+
+.glossary-hero p {
+  margin: 0 0 8px;
+}
+
+.glossary-group {
+  border-top: 1px solid var(--rule);
+  padding: 24px 0 40px;
+}
+
+.glossary-group h2 {
+  margin: 0 0 16px;
+}
+
+.glossary-group td:first-child {
+  white-space: nowrap;
+  width: 1%;
+}

@@ -1,0 +1,208 @@
+/* Struk Karbon receipt slip, export actions, caption and story card. */
+.struk-side {
+  position: sticky;
+  top: 24px;
+}
+
+.struk-slip {
+  background: var(--surface-white);
+  border: 1px solid var(--ink);
+  padding: 24px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+}
+
+.struk-slip-title {
+  font-weight: 500;
+  font-size: 14px;
+  margin: 0 0 4px;
+}
+
+.struk-slip-sub {
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  margin: 0 0 16px;
+}
+
+.struk-meta {
+  margin: 0 0 8px;
+}
+
+.struk-meta > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 2px 0;
+}
+
+.struk-meta dt {
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.struk-meta dd {
+  margin: 0;
+  text-align: right;
+}
+
+.struk-sep {
+  white-space: nowrap;
+  overflow: hidden;
+  margin: 8px 0;
+}
+
+.struk-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 2px 0;
+}
+
+.struk-net {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 16px;
+  background: var(--surface-inset);
+  padding: 12px;
+  margin: 8px 0;
+}
+
+.struk-net-value {
+  font-size: 36px;
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  margin: 0;
+  white-space: nowrap;
+}
+
+.struk-net-value span {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.struk-tier {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin: 12px 0;
+}
+
+.struk-stamp {
+  background: var(--ink);
+  color: var(--surface-white);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  padding: 4px 8px;
+  white-space: nowrap;
+}
+
+.struk-check {
+  border-top: 1px solid var(--rule);
+  padding-top: 12px;
+  color: var(--muted);
+}
+
+.struk-demo-note {
+  color: var(--ink);
+  margin: 0 0 8px;
+}
+
+.struk-barcode {
+  width: 100%;
+  height: auto;
+  max-height: 64px;
+  display: block;
+  margin-top: 8px;
+}
+
+.struk-tear {
+  height: 12px;
+  margin: 16px -24px -24px;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='12'><path d='M0 12 L8 0 L16 12 Z' fill='white'/></svg>");
+  background-repeat: repeat-x;
+  background-size: 16px 12px;
+}
+
+.struk-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.struk-caption {
+  background: var(--surface-inset);
+  border: 1px solid var(--rule);
+  padding: 16px;
+  margin-top: 16px;
+}
+
+.struk-caption-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 8px;
+}
+
+.struk-caption p {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.struk-story-wrap {
+  position: fixed;
+  left: -10000px;
+  top: 0;
+}
+
+.struk-story {
+  width: 540px;
+  height: 960px;
+  background: var(--surface-white);
+  color: var(--ink);
+  padding: 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  font-family: var(--font-mono);
+}
+
+.struk-story-total {
+  font-size: 96px;
+  font-weight: 500;
+  letter-spacing: -0.03em;
+}
+
+@media (max-width: 1023px) {
+  .struk-side {
+    position: static;
+  }
+}
+
+@media print {
+  .cm-header,
+  .cm-footer,
+  .struk-inputs,
+  .struk-actions,
+  .struk-caption,
+  .struk-tabbar,
+  .struk-story-wrap {
+    display: none;
+  }
+
+  .cm-container {
+    max-width: none;
+  }
+
+  .struk-grid {
+    display: block;
+  }
+
+  .struk-slip {
+    border: 0;
+  }
+}

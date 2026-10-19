@@ -1,0 +1,181 @@
+/* Methodology module: codex grid, formulas, lineage, topology, print. */
+.method-hero {
+  padding-top: 48px;
+  padding-bottom: 24px;
+}
+
+.method-hero h1 {
+  margin: 12px 0 16px;
+  text-transform: uppercase;
+}
+
+.method-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.method-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
+  gap: 24px;
+  align-items: start;
+}
+
+.method-aside {
+  position: sticky;
+  top: 24px;
+}
+
+.method-codex {
+  list-style: none;
+  margin: 8px 0 24px;
+  padding: 0;
+  border-top: 1px solid var(--rule);
+}
+
+.method-codex li {
+  border-bottom: 1px solid var(--rule);
+}
+
+.method-codex a {
+  display: block;
+  padding: 10px 0;
+  color: var(--ink);
+  text-decoration: none;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+}
+
+.method-codex a:hover {
+  background: var(--row-hover);
+}
+
+.method-axiom {
+  background: var(--surface-inset);
+  border: 1px solid var(--rule);
+  padding: 16px;
+  margin-bottom: 24px;
+}
+
+.method-quote {
+  border-top: 1px solid var(--ink);
+  padding-top: 12px;
+  margin: 0;
+}
+
+.method-quote p {
+  font-size: 16px;
+  line-height: 1.6;
+  margin: 0 0 8px;
+}
+
+.method-quote cite {
+  font-style: normal;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.method-sec {
+  background: var(--surface-white);
+  border: 1px solid var(--rule);
+  padding: 24px;
+  margin: 0 0 24px;
+  scroll-margin-top: 24px;
+}
+
+.method-cols-3 {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.method-formula {
+  background: var(--surface-inset);
+  border: 1px solid var(--rule);
+  padding: 16px;
+  margin: 16px 0;
+}
+
+.method-formula pre {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  overflow-x: auto;
+  margin: 8px 0 0;
+}
+
+.scope-chip {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 2px 6px;
+  border: 1px solid var(--ink);
+  color: var(--ink);
+  white-space: nowrap;
+}
+
+.scope-s2 {
+  border-color: var(--olive);
+  color: var(--olive);
+}
+
+.scope-s3 {
+  border-color: var(--rule);
+  color: var(--muted);
+}
+
+.method-topology {
+  background: var(--ink);
+  color: var(--surface-white);
+  padding: 24px;
+  overflow-x: auto;
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.method-actions {
+  display: grid;
+  gap: 8px;
+  margin: 0 0 16px;
+}
+
+@media (max-width: 1023px) {
+  .method-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .method-aside {
+    position: static;
+  }
+
+  .method-cols-3 {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media print {
+  .cm-header,
+  .cm-footer,
+  .method-aside,
+  .method-actions {
+    display: none;
+  }
+
+  .cm-container {
+    max-width: none;
+    padding: 0;
+  }
+
+  .method-grid {
+    display: block;
+  }
+
+  .method-sec {
+    break-inside: avoid;
+  }
+}

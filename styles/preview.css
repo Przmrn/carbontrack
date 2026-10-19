@@ -1,0 +1,110 @@
+/* Dossier A4 preview (210:297, flat) and print stylesheet. */
+.dossier-preview-head {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.a4 {
+  background: var(--surface-white);
+  color: var(--ink);
+  border: 1px solid var(--ink);
+  aspect-ratio: 210 / 297;
+  overflow: hidden;
+  padding: 5%;
+  font-size: 12px;
+}
+
+.a4-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: flex-start;
+  margin-bottom: 16px;
+}
+
+.a4-studio {
+  font-weight: 700;
+  font-size: 18px;
+  letter-spacing: -0.04em;
+  margin: 0 0 4px;
+}
+
+.a4-stamp {
+  flex: none;
+  border: 1px solid var(--ink);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  padding: 6px 10px;
+  max-width: 140px;
+  text-align: center;
+}
+
+.a4-summary {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  background: var(--surface-inset);
+  padding: 12px 16px;
+  margin: 8px 0 16px;
+}
+
+.a4-summary .tnum {
+  font-family: var(--font-mono);
+  font-size: 28px;
+  font-weight: 500;
+  margin: 4px 0;
+}
+
+.a4-intensity {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  background: var(--surface-inset);
+  padding: 12px 16px;
+  margin: 8px 0 16px;
+}
+
+.a4-sign {
+  font-weight: 700;
+  margin: 8px 0 4px;
+}
+
+@media (max-width: 767px) {
+  .a4-summary {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media print {
+  @page {
+    size: A4;
+    margin: 12mm;
+  }
+
+  .cm-header,
+  .cm-footer,
+  .dossier-hero,
+  .dossier-params,
+  .dossier-preview-head,
+  .dossier-print {
+    display: none;
+  }
+
+  .cm-container {
+    max-width: none;
+    padding: 0;
+  }
+
+  .dossier-grid {
+    display: block;
+  }
+
+  .a4 {
+    aspect-ratio: auto;
+    border: 0;
+    padding: 0;
+  }
+}

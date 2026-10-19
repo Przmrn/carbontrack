@@ -1,0 +1,41 @@
+/* Layout for the /dev/primitives showcase page only. Not part of the product. */
+.cm-kit-hero {
+  padding: 48px 0 24px;
+  max-width: 720px;
+}
+
+.cm-kit-hero h1 {
+  margin: 8px 0 16px;
+}
+
+.cm-kit-hero p {
+  margin: 0 0 8px;
+}
+
+.cm-kit-section {
+  border-top: 1px solid var(--rule);
+  padding: 24px 0 48px;
+}
+
+.cm-kit-head {
+  margin-bottom: 24px;
+  max-width: 720px;
+}
+
+.cm-kit-head .cm-help {
+  margin: 8px 0 0;
+}
+
+.cm-kit-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
+}
+
+.cm-kit-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 24px;
+  margin-bottom: 24px;
+}

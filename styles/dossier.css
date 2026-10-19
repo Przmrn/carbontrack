@@ -1,0 +1,188 @@
+/* Dossier parameters: intervals, frameworks, integrity, formats. */
+.dossier-hero {
+  padding-top: 48px;
+  padding-bottom: 24px;
+}
+
+.dossier-hero h1 {
+  margin: 12px 0 16px;
+  text-transform: uppercase;
+}
+
+.dossier-intro {
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--muted);
+  max-width: 560px;
+  margin: 0;
+}
+
+.dossier-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 24px;
+  align-items: start;
+}
+
+.dossier-params {
+  background: var(--surface-white);
+  border: 1px solid var(--rule);
+  padding: 24px;
+}
+
+.dossier-params-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  background: var(--surface-inset);
+  padding: 12px 16px;
+  margin-bottom: 16px;
+}
+
+.dossier-intervals {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  margin: 8px 0;
+}
+
+.dossier-intervals button {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  align-items: flex-start;
+  background: transparent;
+  border: 1px solid var(--rule);
+  color: var(--ink);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  padding: 12px;
+  min-height: 44px;
+  cursor: pointer;
+  text-align: left;
+}
+
+.dossier-intervals button[aria-pressed="true"] {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--surface-white);
+}
+
+.dossier-frameworks {
+  list-style: none;
+  margin: 8px 0 16px;
+  padding: 0;
+}
+
+.dossier-frameworks li {
+  border-top: 1px solid var(--rule);
+  padding: 12px 0;
+}
+
+.dossier-frameworks label {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  cursor: pointer;
+}
+
+.dossier-frameworks input[type="checkbox"] {
+  appearance: none;
+  flex: none;
+  width: 14px;
+  height: 14px;
+  margin-top: 2px;
+  border: 1px solid var(--ink);
+  background: transparent;
+  cursor: pointer;
+}
+
+.dossier-frameworks input[type="checkbox"]:checked {
+  background: var(--ink);
+}
+
+.dossier-frameworks input[type="checkbox"]:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.dossier-fw-name {
+  display: block;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.dossier-integrity {
+  background: var(--surface-inset);
+  border: 1px solid var(--rule);
+  padding: 12px 16px;
+  margin: 16px 0;
+}
+
+.dossier-formats {
+  display: flex;
+  flex-wrap: wrap;
+  border: 1px solid var(--ink);
+  margin: 8px 0;
+}
+
+.dossier-formats button {
+  flex: 1;
+  min-height: 44px;
+  background: transparent;
+  border: 0;
+  border-left: 1px solid var(--ink);
+  color: var(--ink);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  padding: 8px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.dossier-formats button:first-child {
+  border-left: 0;
+}
+
+.dossier-formats button[aria-pressed="true"] {
+  background: var(--ink);
+  color: var(--surface-white);
+}
+
+.dossier-formats button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.dossier-compile {
+  width: 100%;
+  margin: 16px 0 8px;
+}
+
+.dossier-print {
+  margin-top: 16px;
+}
+
+@media (max-width: 1023px) {
+  .dossier-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 767px) {
+  .dossier-frameworks label {
+    min-height: 44px;
+    align-items: center;
+  }
+}
+
+/* Empty-state hint shown when the Calculator has no numbers yet. */
+.dossier-empty-hint {
+  margin: 16px 0 0;
+  padding: 12px 16px;
+  border: 1px solid var(--vermilion);
+  font-family: var(--font-ui);
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--ink);
+}

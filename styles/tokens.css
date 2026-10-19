@@ -1,0 +1,129 @@
+/* C—METRIC design tokens (DESIGN.md §3). No radius, shadow, gradient or blur. */
+/* The hex values live once, in the Tailwind v4 @theme block: they emit the CSS
+   custom properties used below and generate the utilities (bg-ink, text-muted…). */
+@theme {
+  --color-surface: #f9f9f8;
+  --color-surface-white: #ffffff;
+  --color-surface-inset: #f3f4f3;
+  --color-row-hover: #f0f0ee;
+  --color-ink: #111111;
+  --color-olive: #2e382e;
+  --color-vermilion: #e05333;
+  --color-sage-tint: #d4ded2;
+  --color-rule: #e4e4e2;
+  --color-muted: #686865;
+  --font-ui: "Inter", -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+}
+
+:root {
+  --surface: var(--color-surface);
+  --surface-white: var(--color-surface-white);
+  --surface-inset: var(--color-surface-inset);
+  --row-hover: var(--color-row-hover);
+  --ink: var(--color-ink);
+  --olive: var(--color-olive);
+  --vermilion: var(--color-vermilion);
+  --sage-tint: var(--color-sage-tint);
+  --rule: var(--color-rule);
+  --muted: var(--color-muted);
+  --curtain: rgba(17, 17, 17, 0.2);
+}
+
+*,
+*::before,
+*::after {
+  border-radius: 0;
+  box-shadow: none;
+}
+
+/* Type scale */
+.t-display {
+  font-family: var(--font-ui);
+  font-weight: 600;
+  font-size: 80px;
+  line-height: 84px;
+  letter-spacing: -0.04em;
+}
+.t-headline-lg {
+  font-family: var(--font-ui);
+  font-weight: 500;
+  font-size: 48px;
+  line-height: 52px;
+  letter-spacing: -0.03em;
+}
+.t-headline-md {
+  font-family: var(--font-ui);
+  font-weight: 500;
+  font-size: 32px;
+  line-height: 38px;
+  letter-spacing: -0.02em;
+}
+
+.t-headline-sm {
+  font-family: var(--font-ui);
+  font-weight: 500;
+  font-size: 22px;
+  line-height: 28px;
+  letter-spacing: -0.02em;
+}
+.t-data-metric {
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: 36px;
+  line-height: 40px;
+  letter-spacing: -0.03em;
+  font-feature-settings: "tnum" 1, "zero" 1;
+}
+.t-label-code {
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: 11px;
+  line-height: 14px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.t-label-caps {
+  font-family: var(--font-ui);
+  font-weight: 600;
+  font-size: 10px;
+  line-height: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.tnum {
+  font-feature-settings: "tnum" 1, "zero" 1;
+}
+
+:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+}
+
+@media (max-width: 767px) {
+  .t-display {
+    font-size: 44px;
+    line-height: 48px;
+    letter-spacing: -0.03em;
+  }
+
+  .t-headline-lg {
+    font-size: 32px;
+    line-height: 36px;
+    letter-spacing: -0.02em;
+  }
+
+  .t-data-metric {
+    font-size: 28px;
+    line-height: 32px;
+    letter-spacing: -0.02em;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition: none;
+  }
+}
