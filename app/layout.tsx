@@ -2,6 +2,7 @@
 import type { Metadata } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
+import BootCurtain from "../components/BootCurtain";
 import GridOverlay from "../components/GridOverlay";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
@@ -32,6 +33,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <body className="min-h-full flex flex-col">
         <GridOverlay />
         <LanguageProvider>
+          <BootCurtain />
           <CalculatorStore>
             <Header />
             <main id="content" className="flex-1">

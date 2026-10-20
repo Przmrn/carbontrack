@@ -1,0 +1,114 @@
+/* One-time opening curtain (owner-approved exception to the instant Calculator:
+   it runs once on a hard load, before any interaction, and never on navigation).
+   It shows no progress bar or counter; it waits for real page/font readiness. */
+.boot-curtain {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  background: var(--surface);
+  color: var(--ink);
+  padding: 24px 32px;
+  transform: translateY(0);
+}
+
+.boot-curtain[data-leaving="true"] {
+  transform: translateY(-100%);
+  transition: transform 320ms cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+.boot-top,
+.boot-bottom {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+
+.boot-top {
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--rule);
+}
+
+.boot-bottom {
+  padding-top: 12px;
+  border-top: 1px solid var(--rule);
+}
+
+.boot-name {
+  font-family: var(--font-ui);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+}
+
+.boot-center {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 12px;
+  min-height: 0;
+}
+
+.boot-title {
+  margin: 0;
+  font-family: var(--font-ui);
+  font-size: clamp(48px, 9vw, 120px);
+  font-weight: 500;
+  line-height: 0.95;
+  letter-spacing: -0.05em;
+  text-transform: uppercase;
+}
+
+.boot-sub {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .boot-top,
+  .boot-bottom {
+    animation: boot-fade 260ms ease-out both;
+  }
+
+  .boot-center {
+    animation: boot-rise 480ms 60ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .boot-curtain {
+    display: none;
+  }
+}
+
+@keyframes boot-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes boot-rise {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

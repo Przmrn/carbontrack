@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "../styles/tokens.css";
+@import "../styles/boot.css";
 @import "../styles/shell.css";
 @import "../styles/primitives.css";
 @import "../styles/devkit.css";

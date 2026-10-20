@@ -84,7 +84,7 @@ Spacing scale: 4 / 8 / 16 / 24 / 48 only. Max content width 1440. The tablet lay
 - `border-radius: 0` everywhere (override Tailwind's defaults; the prototype's 0.25rem/0.5rem is wrong). Radio and checkbox are squares.
 - `box-shadow: none` everywhere, including the A4 preview and mobile cards. Depth = flat tone change + 1px border.
 - Focus: swap to a 1px solid `--ink` border, no glow rings. Keep a visible 2px outline for keyboard focus; accessibility wins.
-- Motion: instant, or a 100ms colour cut on hover. No scroll animation, no parallax, no 3D. Honour `prefers-reduced-motion`.
+- Motion: instant, or a 100ms colour cut on hover. No scroll animation, no parallax, no 3D. Honour `prefers-reduced-motion`. The one exception is the one-time opening curtain on hard load (§6.1).
 
 ---
 
@@ -131,7 +131,7 @@ Spacing scale: 4 / 8 / 16 / 24 / 48 only. Max content width 1440. The tablet lay
 - Result panel, sticky on desktop and a fixed bottom bar on mobile (tap to expand): `Total emisi per tahun` with the number and unit on the same baseline (or `—` when nothing is entered), a persistent strip `ESTIMASI DEMO · faktor emisi belum terverifikasi`, the 3-segment scope bar with plain legends (only when total > 0), and a per-card bar chart (`Emisi per kartu`: sorted biggest first, bar = share of the yearly total, value in t CO₂e and %), then `[ LIHAT LAPORAN ]` (disabled until total > 0), `[ MULAI ULANG ]`, and `[ COBA DENGAN DATA CONTOH ]` only when empty, with a visible sample-data note while it is loaded.
 - Below the panel: `Cara hitung mengikuti struktur laporan DHL Group; angka faktor emisi adalah contoh, bukan angka DHL.` The checksum stays on the Dossier, not in this panel.
 - First load is empty: no fabricated prefilled numbers, totals or baselines. The sample button loads clearly labelled demo numbers, not the old mockup prefill.
-- The Calculator is instant-only: no 3D, no scroll animation, no transitions on numbers.
+- The Calculator is instant-only: no 3D, no scroll animation, no transitions on numbers. The only exception is the one-time opening curtain (`components/BootCurtain.tsx`): it runs once on a hard load, before any interaction, waits for real page/font readiness (no fake progress, minimum 600ms), never runs on client-side route changes, and is disabled entirely under `prefers-reduced-motion`.
 - Language: Indonesian first, with an `ID | EN` toggle in the header. Strings live in `content/id.ts` and `content/en.ts`; `?lang=en` selects English on load. Nothing is stored in localStorage.
 
 ### 6.2 Struk Karbon (`/struk`): the public, shareable module

@@ -5,7 +5,7 @@ import type { Copy } from "./en";
 export const id = {
   brand: {
     name: "C—METRIC",
-    sub: "AKUNTANSI EKOLOGIS",
+    sub: "",
     status: "PROTOTIPE v0.1",
     metaTitle: "C—METRIC — Akuntansi Ekologis",
     metaDescription:
