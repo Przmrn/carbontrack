@@ -7,7 +7,7 @@ import { calculatorFactors } from "../../data/factors";
 import type { ActivityRow, CalculatorState } from "../../lib/calculator";
 import { ppaShare } from "../../lib/calculator";
 import { formatAmount, formatFactor, formatKg } from "../../lib/format";
-import { intlLocale } from "../../lib/i18n";
+import { factorLabel, intlLocale } from "../../lib/i18n";
 import { fromAnnual, kwhToMwh, mwhToKwh, toAnnual, type Period } from "../../lib/units";
 import { useLanguage } from "../LanguageProvider";
 import AmountField from "./AmountField";
@@ -105,7 +105,7 @@ export default function ElectricityCard({
             >
               {GRID_FACTORS.map((factor) => (
                 <option key={factor.id} value={factor.id}>
-                  {factor.label} — {formatFactor(factor.value, locale)} {factor.unit}
+                  {factorLabel(factor, lang)} — {formatFactor(factor.value, locale)} {factor.unit}
                 </option>
               ))}
             </select>

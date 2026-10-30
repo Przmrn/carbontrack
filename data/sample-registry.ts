@@ -21,8 +21,23 @@ export const sampleStudios: SampleStudio[] = [
   { code: "ST-6421", practice: "Oslo Collective", classification: "INDUSTRIAL", fte: 85, grossTonnes: 194.8, shares: [0.11, 0.18, 0.71], tier: "REPORTED" },
 ];
 
-export function fteScaleOf(fte: number): FteScale {
+export const fteScaleOf = (fte: number): FteScale => {
   if (fte <= 25) return "1–25";
   if (fte <= 100) return "25–100";
   return "100+";
-}
+};
+
+export const typologyValues: Typology[] = [
+  "ARCHITECTURE",
+  "DIGITAL LAB",
+  "EDITORIAL",
+  "INDUSTRIAL",
+];
+
+export const tierValues: AssuranceTier[] = [
+  "REPORTED",
+  "REDUCTION TRACK",
+  "UNREVIEWED",
+];
+
+export const scaleValues: FteScale[] = ["1–25", "25–100", "100+"];

@@ -22,7 +22,7 @@ export default function Header() {
           <Logo />
         </Link>
         <span className="cm-status">{copy.brand.status}</span>
-        <div className="cm-lang" role="group" aria-label="Bahasa / Language">
+        <div className="cm-lang" role="group" aria-label={copy.common.language}>
           <button type="button" aria-pressed={lang === "id"} onClick={() => setLang("id")}>
             ID
           </button>
@@ -43,7 +43,12 @@ export default function Header() {
             <li key={item.href}>
               <Link
                 href={item.href}
-                aria-current={pathname === item.href ? "page" : undefined}
+                aria-current={
+                  pathname === item.href ||
+                  (item.href !== "/" && pathname.startsWith(`${item.href}/`))
+                    ? "page"
+                    : undefined
+                }
                 onClick={() => setOpen(false)}
               >
                 <span>{item.n}</span>

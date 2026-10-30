@@ -8,7 +8,7 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 import LanguageProvider from "../components/LanguageProvider";
 import CalculatorStore from "../components/calculator/CalculatorStore";
-import { en } from "../content/en";
+import { id } from "../content/id";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -23,8 +23,8 @@ const jetbrains = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: en.brand.metaTitle,
-  description: en.brand.metaDescription,
+  title: id.brand.metaTitle,
+  description: id.brand.metaDescription,
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

@@ -5,7 +5,8 @@ import { useRef, useState } from "react";
 import { toPng } from "html-to-image";
 import { formatKg } from "../../lib/format";
 import type { Tier } from "../../lib/emissions";
-import { en } from "../../content/en";
+import { intlLocale } from "../../lib/i18n";
+import { useLanguage } from "../LanguageProvider";
 import StrukReceipt, { type ReceiptLineView } from "./StrukReceipt";
 import Barcode from "./Barcode";
 import Button from "../ui/Button";
@@ -46,9 +47,11 @@ export default function ReceiptPanel({
   const storyRef = useRef<HTMLDivElement>(null);
   const [copied, setCopied] = useState<boolean>(false);
   const [failed, setFailed] = useState<boolean>(false);
-  const copy = en.struk.actions;
+  const { lang, copy: ui } = useLanguage();
+  const locale = intlLocale(lang);
+  const copy = ui.struk.actions;
 
-  const caption = `${en.struk.caption.print}: ${formatKg(net)} kg CO₂e [${tier}]. ${en.struk.caption.calculatedWith}. ${en.struk.caption.tags}`;
+  const caption = `${ui.struk.caption.print}: ${formatKg(net, locale)} kg CO₂e [${ui.struk.tiers[tier]}]. ${ui.struk.caption.calculatedWith}. ${ui.struk.caption.tags}`;
 
   async function handlePng(): Promise<void> {
     if (!receiptRef.current) return;
@@ -123,9 +126,9 @@ export default function ReceiptPanel({
       </div>
       <div aria-hidden="true" className="struk-story-wrap">
         <div ref={storyRef} className="struk-story">
-          <p className="t-label-code">C—METRIC // DAILY LEDGER</p>
-          <p className="struk-story-total tnum">{formatKg(net)} KG</p>
-          <p className="struk-stamp">STAMP: {en.struk.tiers[tier]}</p>
+          <p className="t-label-code">{copy.storyLabel}</p>
+          <p className="struk-story-total tnum">{formatKg(net, locale)} KG</p>
+          <p className="struk-stamp">{ui.common.stamp}: {ui.struk.tiers[tier]}</p>
           <p className="t-label-code">
             {dateLabel} · {checkCode}
           </p>

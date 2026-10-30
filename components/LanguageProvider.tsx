@@ -10,8 +10,9 @@ import {
   useState,
   type ReactNode,
 } from "react";
+import { usePathname } from "next/navigation";
 import type { Copy } from "../content/en";
-import { copyFor, DEFAULT_LANGUAGE, parseLang, type Language } from "../lib/i18n";
+import { copyFor, DEFAULT_LANGUAGE, metaFor, parseLang, type Language } from "../lib/i18n";
 
 interface LanguageValue {
   lang: Language;
@@ -22,6 +23,7 @@ interface LanguageValue {
 const LanguageContext = createContext<LanguageValue | null>(null);
 
 export default function LanguageProvider({ children }: { children: ReactNode }) {
+  const pathname = usePathname();
   const [lang, setLangState] = useState<Language>(DEFAULT_LANGUAGE);
 
   useEffect(() => {
@@ -43,6 +45,23 @@ export default function LanguageProvider({ children }: { children: ReactNode }) 
   }, []);
 
   const value = useMemo(() => ({ lang, copy: copyFor(lang), setLang }), [lang, setLang]);
+
+  useEffect(() => {
+    const meta = metaFor(value.copy, pathname);
+    document.title = meta.title;
+    const tag = document.querySelector('meta[name="description"]');
+    if (tag) tag.setAttribute("content", meta.description);
+  }, [pathname, value.copy]);
+
+  // Keep the chosen English language in the URL across client-side navigation,
+  // so a reload or a shared link still opens in English. No storage is used.
+  useEffect(() => {
+    if (lang !== "en") return;
+    const url = new URL(window.location.href);
+    if (url.searchParams.get("lang") === "en") return;
+    url.searchParams.set("lang", "en");
+    window.history.replaceState(null, "", `${url.pathname}${url.search}${url.hash}`);
+  }, [lang, pathname]);
 
   return <LanguageContext.Provider value={value}>{children}</LanguageContext.Provider>;
 }

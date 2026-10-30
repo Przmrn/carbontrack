@@ -1,11 +1,11 @@
 // Methodology route: scope demarcation, formulas, lineage and uncertainty.
 import type { Metadata } from "next";
 import MethodologyWorkspace from "../../components/methodology/MethodologyWorkspace";
-import { en } from "../../content/en";
+import { id } from "../../content/id";
 
 export const metadata: Metadata = {
-  title: en.methodology.metaTitle,
-  description: en.methodology.metaDescription,
+  title: id.methodology.metaTitle,
+  description: id.methodology.metaDescription,
 };
 
 export default function MethodologyRoute() {

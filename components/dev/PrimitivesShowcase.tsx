@@ -4,8 +4,9 @@
 import { useState, type ReactNode } from "react";
 import { strukFactors } from "../../data/factors";
 import { toKg } from "../../lib/emissions";
-import { formatKg } from "../../lib/format";
-import { en } from "../../content/en";
+import { formatAmount, formatFactor, formatKg } from "../../lib/format";
+import { factorLabel, intlLocale } from "../../lib/i18n";
+import { useLanguage } from "../LanguageProvider";
 import Button from "../ui/Button";
 import Chip from "../ui/Chip";
 import NumberInput from "../ui/NumberInput";
@@ -14,7 +15,6 @@ import Slider from "../ui/Slider";
 import Stepper from "../ui/Stepper";
 import Table from "../ui/Table";
 
-const copy = en.dev;
 // Arbitrary inputs for the sample rows. Factor values come from data/factors.ts.
 const DEMO_AMOUNTS = [24.5, 2, 5];
 
@@ -31,7 +31,10 @@ function Section({ title, note, children }: { title: string; note: string; child
 }
 
 export default function PrimitivesShowcase() {
-  const [scopeView, setScopeView] = useState("MARKET-BASED");
+  const { lang, copy: ui } = useLanguage();
+  const copy = ui.dev;
+  const locale = intlLocale(lang);
+  const [scopeView, setScopeView] = useState<"MARKET" | "LOCATION">("MARKET");
   const [km, setKm] = useState(24.5);
   const [servings, setServings] = useState(1);
   const [gasKwh, setGasKwh] = useState(1200);
@@ -82,9 +85,9 @@ export default function PrimitivesShowcase() {
         />
         <Segmented
           label={copy.segmentedLabel}
-          options={["MARKET-BASED", "LOCATION-BASED"]}
-          value={scopeView}
-          onChange={setScopeView}
+          options={[copy.segmentMarket, copy.segmentLocation]}
+          value={scopeView === "MARKET" ? copy.segmentMarket : copy.segmentLocation}
+          onChange={(value) => setScopeView(value === copy.segmentMarket ? "MARKET" : "LOCATION")}
         />
       </Section>
 
@@ -118,14 +121,14 @@ export default function PrimitivesShowcase() {
           <tbody>
             {rows.map((factor, index) => (
               <tr key={factor.id}>
-                <td>{factor.label}</td>
+                <td>{factorLabel(factor, lang)}</td>
                 <td className="num tnum">
-                  {DEMO_AMOUNTS[index]} {factor.unit}
+                  {formatAmount(DEMO_AMOUNTS[index], locale)} {factor.unit}
                 </td>
                 <td className="num tnum">
-                  {factor.value} {factor.unit}
+                  {formatFactor(factor.value, locale)} {factor.unit}
                 </td>
-                <td className="num tnum">{formatKg(toKg(DEMO_AMOUNTS[index], factor))}</td>
+                <td className="num tnum">{formatKg(toKg(DEMO_AMOUNTS[index], factor), locale)}</td>
               </tr>
             ))}
           </tbody>
@@ -139,7 +142,7 @@ export default function PrimitivesShowcase() {
         <p className="t-data-metric">1 234.56 t CO₂e</p>
         <p className="t-label-caps">Label Caps 10 / 12</p>
         <p className="t-label-code">LABEL CODE 11 / 14</p>
-        <p className="tnum">Tabular figures: 0123456789 · {servings} · {km}</p>
+        <p className="tnum">Tabular figures: 0123456789 · {formatAmount(servings, locale)} · {formatAmount(km, locale)}</p>
       </Section>
     </div>
   );

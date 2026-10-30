@@ -1,8 +1,11 @@
 // Struk Karbon receipt slip: mono rows, net block, tier stamp, check footer.
+"use client";
+
 import type { Ref } from "react";
 import { formatKg } from "../../lib/format";
 import type { Tier } from "../../lib/emissions";
-import { en } from "../../content/en";
+import { intlLocale } from "../../lib/i18n";
+import { useLanguage } from "../LanguageProvider";
 import Barcode from "./Barcode";
 
 export interface ReceiptLineView {
@@ -31,7 +34,9 @@ export default function StrukReceipt({
   tier,
   checkCode,
 }: StrukReceiptProps) {
-  const copy = en.struk.receipt;
+  const { lang, copy: ui } = useLanguage();
+  const locale = intlLocale(lang);
+  const copy = ui.struk.receipt;
   return (
     <div ref={ref} id="struk-receipt" className="struk-slip">
       <p className="struk-slip-title">{copy.title}</p>
@@ -58,7 +63,7 @@ export default function StrukReceipt({
           <span>
             {String(index + 1).padStart(2, "0")} {line.label} ({line.detail})
           </span>
-          <span className="tnum">{formatKg(line.kg)} kg</span>
+          <span className="tnum">{formatKg(line.kg, locale)} kg</span>
         </div>
       ))}
       <p className="struk-sep" aria-hidden="true">
@@ -70,12 +75,12 @@ export default function StrukReceipt({
           <p className="t-label-caps">{copy.totalLabel}</p>
         </div>
         <p className="struk-net-value tnum" aria-live="polite">
-          {formatKg(net)} <span>KG</span>
+          {formatKg(net, locale)} <span>KG</span>
         </p>
       </div>
       <div className="struk-tier" id="struk-analysis">
         <span className="t-label-caps">{copy.tierLabel}</span>
-        <span className="struk-stamp">STAMP: {en.struk.tiers[tier]}</span>
+        <span className="struk-stamp">{ui.common.stamp}: {ui.struk.tiers[tier]}</span>
       </div>
       <div className="struk-check">
         <p className="struk-demo-note t-label-code">{copy.demoNote}</p>

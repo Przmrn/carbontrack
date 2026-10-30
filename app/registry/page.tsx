@@ -1,11 +1,11 @@
 // Registry route: sample peer index with filters, sorting and spread.
 import type { Metadata } from "next";
 import RegistryWorkspace from "../../components/registry/RegistryWorkspace";
-import { en } from "../../content/en";
+import { id } from "../../content/id";
 
 export const metadata: Metadata = {
-  title: en.registry.metaTitle,
-  description: en.registry.metaDescription,
+  title: id.registry.metaTitle,
+  description: id.registry.metaDescription,
 };
 
 export default function RegistryRoute() {

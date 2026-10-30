@@ -1,4 +1,6 @@
 // All UI strings (English). Indonesian copy lives in content/id.ts.
+import { dhlEn } from "./dhl/en";
+
 export const en = {
   brand: {
     name: "C—METRIC",
@@ -48,6 +50,9 @@ export const en = {
     skipToContent: "Skip to content",
     decrease: "Decrease",
     increase: "Increase",
+    section: "SECTION",
+    stamp: "STAMP",
+    language: "Bahasa / Language",
   },
   struk: {
     metaTitle: "Struk Karbon — C—METRIC",
@@ -106,7 +111,7 @@ export const en = {
       colValue: "FACTOR",
       colStatus: "STATUS",
     },
-    units: { km: "KM", hrs: "HRS", times: "×" },
+    units: { km: "KM", hrs: "HRS", times: "×", kgServing: "KG/SERV", kgUnit: "KG/UNIT" },
     demoNote: "ALL FACTORS ARE DEMO — SEE THE FULL TABLE IN SECTION F",
     receipt: {
       title: "C—METRIC // DAILY LEDGER",
@@ -131,6 +136,7 @@ export const en = {
       failed: "EXPORT FAILED — TRY AGAIN",
       captionTitle: "SHARE CAPTION",
       ready: "READY TO POST",
+      storyLabel: "C—METRIC // DAILY LEDGER",
     },
     caption: {
       print: "My daily carbon print",
@@ -354,10 +360,19 @@ export const en = {
       "DATA STAYS IN YOUR BROWSER",
     ],
     asideTitle: "CONTENTS",
+    sectionsLabel: "SECTIONS",
+    axiomLabel: "AXIOM",
     axiomTitle: "THE CORE FORMULA",
     axiom: "E = A × EF × (1 − ER)",
     axiomLegend: ["A: Activity Amount", "EF: Emission Factor", "ER: Efficiency Ratio (0–1)"],
-    codex: ["WHAT IS COUNTED", "THE FORMULAS", "FACTOR LIST", "DATA FLOW", "WHAT THIS DOESN'T DO"],
+    codex: [
+      "WHAT IS COUNTED",
+      "THE FORMULAS",
+      "FACTOR LIST",
+      "DATA FLOW",
+      "WHAT THIS DOESN'T DO",
+      "DHL GROUP FY2025",
+    ],
     s01: {
       title: "WHAT IS COUNTED (SCOPES)",
       body: "Three groups: what you burn, the energy you buy, and the rest of the chain.",
@@ -402,6 +417,12 @@ export const en = {
         "No simulation runs in this version, so no confidence interval is shown.",
       illustrative: "ILLUSTRATIVE — NO SIMULATION RUNS IN THIS VERSION",
     },
+    s06: {
+      title: "DHL GROUP FY2025",
+      body:
+        "The published DHL Group FY2025 figures, methods, reconciliation checks, targets and sources now live on a separate reference page. It is not a recomputation from DHL's activity data.",
+      link: "READ THE DHL GROUP FY2025 PAGE",
+    },
     actions: {
       whitepaper: "PRINT THIS PAGE (PDF)",
       exportDb: "DOWNLOAD FACTOR LIST (CSV / JSON)",
@@ -427,8 +448,20 @@ export const en = {
     filterTypology: "SECTOR",
     filterStatus: "STATUS",
     filterScale: "TEAM SIZE",
-    tiers: ["REPORTED", "REDUCTION TRACK", "UNREVIEWED"],
+    tierLabels: {
+      REPORTED: "REPORTED",
+      "REDUCTION TRACK": "REDUCTION TRACK",
+      UNREVIEWED: "UNREVIEWED",
+    },
+    typologyLabels: {
+      ARCHITECTURE: "ARCHITECTURE",
+      "DIGITAL LAB": "DIGITAL LAB",
+      EDITORIAL: "EDITORIAL",
+      INDUSTRIAL: "INDUSTRIAL",
+    },
     scales: ["1–25", "25–100", "100+"],
+    all: "ALL",
+    of: "OF",
     colCode: "STUDIO",
     colClass: "TYPE",
     colFte: "TEAM",
@@ -474,6 +507,8 @@ export const en = {
     stepperSub: "+3.50 KG / SERVING",
     sliderLabel: "COMMUTE DISTANCE",
     segmentedLabel: "SCOPE 2 VIEW",
+    segmentMarket: "MARKET-BASED",
+    segmentLocation: "LOCATION-BASED",
     chipsTitle: "CHIPS",
     chipsNote: "Scope 1 in ink, Scope 2 in olive, Scope 3 in the passive rule with muted text. Vermilion is reserved for increases.",
     chipSage: "SEDANG / MODERATE",
@@ -519,6 +554,7 @@ export const en = {
       dossier: "Audit Export",
     },
   },
+  dhl: dhlEn,
 } as const;
 
 export type EnCopy = typeof en;

@@ -2,7 +2,7 @@
 
 Product: ecological accounting web app, Swiss / International Typographic Style.
 Inputs this spec is merged from: `DESIGN.md` (International Ecological Typographic System), `c_metric_project_prd_brief.md`, 7 reference screens, `c_metric_studio_geometric_logo` (SVG).
-UI language: **English**, with Indonesian bilingual labels inside Struk Karbon (e.g. `PERJALANAN / COMMUTE`, `RENDAH / SEDANG / TINGGI`).
+UI language: **Indonesian by default**, with an `ID | EN` toggle in the header that applies to every product page; English remains available. Struk Karbon keeps Indonesian/English bilingual tier labels (e.g. `RENDAH / LOW`, `SEDANG / MODERATE`). Technical terms (Scope, GHG Protocol, unit symbols) keep their standard forms.
 
 ---
 
@@ -132,7 +132,7 @@ Spacing scale: 4 / 8 / 16 / 24 / 48 only. Max content width 1440. The tablet lay
 - Below the panel: `Cara hitung mengikuti struktur laporan DHL Group; angka faktor emisi adalah contoh, bukan angka DHL.` The checksum stays on the Dossier, not in this panel.
 - First load is empty: no fabricated prefilled numbers, totals or baselines. The sample button loads clearly labelled demo numbers, not the old mockup prefill.
 - The Calculator is instant-only: no 3D, no scroll animation, no transitions on numbers. The only exception is the one-time opening curtain (`components/BootCurtain.tsx`): it runs once on a hard load, before any interaction, waits for real page/font readiness (no fake progress, minimum 600ms), never runs on client-side route changes, and is disabled entirely under `prefers-reduced-motion`.
-- Language: Indonesian first, with an `ID | EN` toggle in the header. Strings live in `content/id.ts` and `content/en.ts`; `?lang=en` selects English on load. Nothing is stored in localStorage.
+- Language (all product pages): Indonesian first, with an `ID | EN` toggle in the header. Strings live in `content/id.ts` and `content/en.ts` with the same typed keys; `?lang=en` selects English on load, the choice survives client-side navigation in memory, and the URL keeps `?lang=en` so a reload or shared link opens in English. Metadata (`<title>` and description) follows the active language after hydration. Nothing is stored in localStorage.
 
 ### 6.2 Struk Karbon (`/struk`): the public, shareable module
 - Left sections: A Identity (handle + date), B Commute (5 mode pills + 0–100 km slider), C Diet (4 steppers), D Domestic (AC 0–24 h, workstation 0–18 h sliders), E Consumables (parcel, cups), F collapsed "Coefficient methodology & citation ledger".
@@ -144,14 +144,14 @@ Spacing scale: 4 / 8 / 16 / 24 / 48 only. Max content width 1440. The tablet lay
 ### 6.3 Registry & Benchmarks (`/registry`)
 Header with aggregate intensity pool + SBTi 2030 bar · three filter rows (typology, audit status, FTE scale) · sortable table (code, practice, classification, FTE, annual gross, intensity bar, S1:S2:S3 ratio, tier, actions) · 3 intelligence panels · intensity-spread histogram (median bar `--ink`, others `--rule`). **All data is a labelled sample dataset** (§8).
 
-### 6.4 Methodology (`/methodology`): includes the DHL case study
+### 6.4 Methodology (`/methodology`): includes the DHL Group FY2025 summary
 Left codex index + formula card + principle quote · right sections:
 - 01 Scope demarcation and boundary (consolidation scope, base year, WTW view, what is excluded: offsets, biogenic CO₂).
 - 02 Formulas, rendered as real maths (KaTeX or clean monospace), from `docs/DHL-METHODOLOGY.md` §3, each tagged `[STANDARD FORM]` because the DHL report does not print them.
 - 03 Factor lineage table (id, factor, unit, scope, source, year, verified). Sources named by DHL: GLEC 3.1, IEA 2024, DEFRA, Clean Cargo, HBEFA, IATA, SmartWay.
 - 04 ASCII boundary topology on an `--ink` panel (Scope 1 / 2 / 3 categories; mark the categories DHL includes in its target).
 - 05 Uncertainty: qualitative only (consumption-based vs activity-based, primary vs secondary data). No Monte Carlo chart unless implemented.
-- **06 DHL Group FY2025 case study** (new): 10-year logistics series with mode shares, 2025 energy by mode, division split, table from `data/dhl-fy2025.ts` (each series with its Statbook sheet and row), then the **reconciliation checks computed live** (`DHL-METHODOLOGY.md` §7), including the one that does not reconcile (location-based total, 0.10 Mt gap), shown honestly. Include a "what DHL does not publish" panel (§8 of that doc). Label: `PUBLISHED FIGURES, DHL GROUP 2025 ANNUAL REPORT. NOT RECOMPUTED FROM ACTIVITY DATA.`
+- **06 DHL Group FY2025**: short summary and link to [`/methodology/dhl`](/methodology/dhl). The page sections are 01 About the reports; 02 FY2025 headline figures; 03 How DHL calculates it; 04 Tableau visualization; 05 Reconciliation checks; 06 Targets and progress; 07 What DHL does not disclose; 08 Mapping to C—METRIC; 09 Sources. It reproduces DHL's published aggregation and cross-checks, not its activity-level calculation; the location-total gap stays visible.
 
 ### 6.5 Audit Export (`/dossier`)
 Left parameters: reporting interval, framework checklist, integrity block, format toggle (PDF / JSON / CSV / XBRL), compile button. Right: **A4 vector preview** (210:297, white, 1px border, no shadow) with executive summary, inventory breakdown, intensity, sign-off block. `@media print` must produce a clean A4. Real exports: **CSV and JSON**, and PDF via the print stylesheet. XBRL is out of scope (show it disabled).
@@ -179,7 +179,7 @@ All factors live in `data/factors.ts`, typed `{ id, label, unit, value, scope, s
 
 **Calculator factors and DHL (revised):** the **method** comes from the DHL report; the **layout does not** (§6.1), and the **values are not DHL's either**. DHL names GLEC 3.1, IEA 2024 and DEFRA and publishes none of their numbers. Enter values in `factors.ts` only when the owner supplies value + source + year; until then every Calculator factor is `verified:false` and shows the demo marker. Activities map to factors in `data/activities.ts`, and each activity's scope is read from its factor, never written by hand. Published DHL figures live separately in `data/dhl-fy2025.ts`, **generated from the DHL Statbook workbook** (series 2016–2025 with sheet + row refs). Never hand-edit it. Calculation logic is in `lib/emissions.ts` and `lib/dhl-checks.ts` (already written and tested; see `docs/DHL-METHODOLOGY.md` §12); the checks are shown on the Methodology page, not in the Calculator.
 
-Rules: format with `Intl.NumberFormat` (`en` default; `id-ID` when an Indonesian locale is selected); 2 decimals for kg and t. Tier thresholds as in §6.2. Equivalencies (km driven, phone charges, tree-days) only from constants with a source in `factors.ts`; otherwise remove them.
+Rules: format with `Intl.NumberFormat` (`id-ID` default; `en` when English is selected); 2 decimals for kg and t. Tier thresholds as in §6.2. Equivalencies (km driven, phone charges, tree-days) only from constants with a source in `factors.ts`; otherwise remove them.
 
 ---
 
@@ -199,6 +199,7 @@ The mockups contain claims that would be false or misleading in a real product. 
 | "Offset credit: rail preference −1.20" | Remove; there is no defined basis for it |
 | Footer "Zürich & Basel" lab | Neutral address or remove |
 | Anything implying C—METRIC recomputes or matches DHL's emissions | State plainly: the case study reproduces DHL's published aggregation and cross-checks, not its activity-level calculation. Never present calculator output as DHL data |
+| Tableau embed without local context | Show the caption fields from `content/tableau.ts` (author, data source, last updated), state that the visualization is separate from the page's data and not verified by C—METRIC, and keep the six-number comparison table. Load only after a click; no Tableau script. On mobile, show the open-in-Tableau link first |
 | Calculator mock values (482.64 t, the 562.4 t sector baseline, target progress) | Removed. The Calculator has no fabricated baseline, target or benchmark. Do not reintroduce one |
 
 Every unverified factor shows a `DEMO FACTOR / UNVERIFIED` marker in the UI and in every export (a `status` column / JSON field). In the Calculator the marker sits on the persistent result strip and inside each card's `Lihat cara hitungnya` detail — not repeated on every visible row; the Dossier, receipts and source tables keep the per-row status. Real factors (DEFRA, IPCC AR6, IEA, national grid) may only be added with a `source` and `year` supplied by the owner.

@@ -3,7 +3,8 @@ import { findFactor } from "../../data/factors";
 import { toKg } from "../../lib/emissions";
 import { formatAmount, formatFactor, formatKg } from "../../lib/format";
 import { COMMUTE_MODE_IDS, type DietCounts, type StrukState } from "../../lib/struk";
-import { en } from "../../content/en";
+import { factorLabel, intlLocale } from "../../lib/i18n";
+import { useLanguage } from "../LanguageProvider";
 import Slider from "../ui/Slider";
 import Stepper from "../ui/Stepper";
 import type { ReceiptLineView } from "./StrukReceipt";
@@ -19,8 +20,8 @@ function subtotal(views: ReceiptLineView[], prefix: string): number {
   return views.filter((view) => view.key.startsWith(prefix)).reduce((sum, view) => sum + view.kg, 0);
 }
 
-function Chip({ value }: { value: number }) {
-  return <span className="struk-chip tnum">{formatKg(value)} KG CO₂E</span>;
+function Chip({ value, locale }: { value: number; locale: "en" | "id-ID" }) {
+  return <span className="struk-chip tnum">{formatKg(value, locale)} KG CO₂E</span>;
 }
 
 const DIET_SLOTS: { slot: keyof DietCounts; factorId: string }[] = [
@@ -37,16 +38,18 @@ function perUnitKg(factorId: string): number {
 }
 
 export default function StrukInputs({ state, views, dateLabel, onPatch }: StrukInputsProps) {
+  const { lang, copy: ui } = useLanguage();
+  const locale = intlLocale(lang);
+  const copy = ui.struk;
   function setDiet(slot: keyof DietCounts, value: number) {
     onPatch({ diet: { ...state.diet, [slot]: value } });
   }
 
-  const copy = en.struk;
   return (
     <div id="struk-inputs" className="struk-inputs">
       <section aria-label={copy.secA.title} className="struk-sec">
         <p className="t-label-caps">
-          SECTION A // {copy.secA.title}
+          {ui.common.section} A // {copy.secA.title}
         </p>
         <div className="struk-grid-2">
           <div className="cm-field">
@@ -76,9 +79,9 @@ export default function StrukInputs({ state, views, dateLabel, onPatch }: StrukI
       <section aria-label={copy.secB.title} className="struk-sec">
         <div className="struk-sec-head">
           <p className="t-label-caps">
-            SECTION B // {copy.secB.title} ({copy.secB.bilingual})
+            {ui.common.section} B // {copy.secB.title} ({copy.secB.bilingual})
           </p>
-          <Chip value={subtotal(views, "commute")} />
+          <Chip value={subtotal(views, "commute")} locale={locale} />
         </div>
         <h3 className="struk-h">{copy.secB.heading}</h3>
         <p className="t-label-caps">{copy.secB.engineLabel}</p>
@@ -94,10 +97,10 @@ export default function StrukInputs({ state, views, dateLabel, onPatch }: StrukI
                 onClick={() => onPatch({ modeId: id })}
               >
                 <span>
-                  0{index + 1} {factor.label.toUpperCase()}
+                  0{index + 1} {factorLabel(factor, lang).toUpperCase()}
                 </span>
                 <span className="tnum">
-                  {formatAmount(factor.value)} {factor.unit.toUpperCase()}
+                  {formatAmount(factor.value, locale)} {factor.unit.toUpperCase()}
                 </span>
               </button>
             );
@@ -123,17 +126,17 @@ export default function StrukInputs({ state, views, dateLabel, onPatch }: StrukI
       <section aria-label={copy.secC.title} className="struk-sec">
         <div className="struk-sec-head">
           <p className="t-label-caps">
-            SECTION C // {copy.secC.title} ({copy.secC.bilingual})
+            {ui.common.section} C // {copy.secC.title} ({copy.secC.bilingual})
           </p>
-          <Chip value={subtotal(views, "diet-")} />
+          <Chip value={subtotal(views, "diet-")} locale={locale} />
         </div>
         <h3 className="struk-h">{copy.secC.heading}</h3>
         <div className="struk-grid-2">
           {DIET_SLOTS.map(({ slot, factorId }, index) => (
             <Stepper
               key={slot}
-              label={`0${index + 1} ${en.struk.secC.items[index]}`}
-              sub={`${formatFactor(perUnitKg(factorId))} KG/SERV`}
+              label={`0${index + 1} ${copy.secC.items[index]}`}
+              sub={`${formatFactor(perUnitKg(factorId), locale)} ${copy.units.kgServing}`}
               value={state.diet[slot]}
               onChange={(value) => setDiet(slot, value)}
             />
@@ -144,9 +147,9 @@ export default function StrukInputs({ state, views, dateLabel, onPatch }: StrukI
       <section aria-label={copy.secD.title} className="struk-sec">
         <div className="struk-sec-head">
           <p className="t-label-caps">
-            SECTION D // {copy.secD.title} ({copy.secD.bilingual})
+            {ui.common.section} D // {copy.secD.title} ({copy.secD.bilingual})
           </p>
-          <Chip value={subtotal(views, "ac") + subtotal(views, "ws")} />
+          <Chip value={subtotal(views, "ac") + subtotal(views, "ws")} locale={locale} />
         </div>
         <h3 className="struk-h">{copy.secD.heading}</h3>
         <div className="struk-grid-2">
@@ -180,21 +183,21 @@ export default function StrukInputs({ state, views, dateLabel, onPatch }: StrukI
       <section aria-label={copy.secE.title} className="struk-sec">
         <div className="struk-sec-head">
           <p className="t-label-caps">
-            SECTION E // {copy.secE.title} ({copy.secE.bilingual})
+            {ui.common.section} E // {copy.secE.title} ({copy.secE.bilingual})
           </p>
-          <Chip value={subtotal(views, "parcels") + subtotal(views, "cups")} />
+          <Chip value={subtotal(views, "parcels") + subtotal(views, "cups")} locale={locale} />
         </div>
         <h3 className="struk-h">{copy.secE.heading}</h3>
         <div className="struk-grid-2">
           <Stepper
             label={copy.secE.parcel}
-            sub={`${copy.secE.parcelSub} — ${formatFactor(perUnitKg("goods-parcel"))} KG/UNIT`}
+            sub={`${copy.secE.parcelSub} — ${formatFactor(perUnitKg("goods-parcel"), locale)} ${copy.units.kgUnit}`}
             value={state.parcels}
             onChange={(value) => onPatch({ parcels: value })}
           />
           <Stepper
             label={copy.secE.cups}
-            sub={`${copy.secE.cupsSub} — ${formatFactor(perUnitKg("goods-cup"))} KG/UNIT`}
+            sub={`${copy.secE.cupsSub} — ${formatFactor(perUnitKg("goods-cup"), locale)} ${copy.units.kgUnit}`}
             value={state.cups}
             onChange={(value) => onPatch({ cups: value })}
           />

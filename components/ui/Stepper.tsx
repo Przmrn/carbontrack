@@ -1,5 +1,7 @@
 // Stepper primitive: square [-] n [+] controls, 44px touch targets.
-import { en } from "../../content/en";
+"use client";
+
+import { useLanguage } from "../LanguageProvider";
 
 interface StepperProps {
   label: string;
@@ -17,9 +19,12 @@ export default function Stepper({
   value,
   onChange,
   max = 99,
-  decreaseLabel = en.common.decrease,
-  increaseLabel = en.common.increase,
+  decreaseLabel,
+  increaseLabel,
 }: StepperProps) {
+  const { copy } = useLanguage();
+  const decrease = decreaseLabel ?? copy.common.decrease;
+  const increase = increaseLabel ?? copy.common.increase;
   return (
     <div className="cm-stepper">
       <div className="cm-stepper-text">
@@ -29,7 +34,7 @@ export default function Stepper({
       <div className="cm-stepper-controls">
         <button
           type="button"
-          aria-label={`${decreaseLabel} ${label}`}
+          aria-label={`${decrease} ${label}`}
           onClick={() => onChange(Math.max(0, value - 1))}
         >
           −
@@ -39,7 +44,7 @@ export default function Stepper({
         </span>
         <button
           type="button"
-          aria-label={`${increaseLabel} ${label}`}
+          aria-label={`${increase} ${label}`}
           onClick={() => onChange(Math.min(max, value + 1))}
         >
           +

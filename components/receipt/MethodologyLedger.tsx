@@ -1,15 +1,20 @@
 // Section F: collapsed coefficient methodology and citation ledger.
+"use client";
+
 import { strukFactors } from "../../data/factors";
 import { formatFactor } from "../../lib/format";
 import { statusForFactor } from "../../lib/export";
-import { en } from "../../content/en";
+import { factorLabel, intlLocale } from "../../lib/i18n";
+import { useLanguage } from "../LanguageProvider";
 
 export default function MethodologyLedger() {
-  const copy = en.struk.secF;
+  const { lang, copy: ui } = useLanguage();
+  const locale = intlLocale(lang);
+  const copy = ui.struk.secF;
   return (
     <details className="struk-sec" id="struk-factors">
       <summary className="t-label-caps">
-        SECTION F // {copy.title}
+        {ui.common.section} F // {copy.title}
       </summary>
       <div className="cm-table-wrap">
         <table className="cm-table">
@@ -24,9 +29,9 @@ export default function MethodologyLedger() {
           <tbody>
             {strukFactors.map((factor) => (
               <tr key={factor.id}>
-                <td>{factor.label}</td>
+                <td>{factorLabel(factor, lang)}</td>
                 <td>{factor.unit}</td>
-                <td className="tnum num">{formatFactor(factor.value)}</td>
+                <td className="tnum num">{formatFactor(factor.value, locale)}</td>
                 <td>
                   <span className="cm-demo">{statusForFactor(factor)}</span>
                 </td>

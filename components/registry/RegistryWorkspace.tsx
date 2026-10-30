@@ -5,14 +5,18 @@ import { useMemo, useState } from "react";
 import {
   fteScaleOf,
   sampleStudios,
+  scaleValues,
+  tierValues,
+  typologyValues,
   type AssuranceTier,
   type FteScale,
   type SampleStudio,
   type Typology,
 } from "../../data/sample-registry";
 import { intensityPerFte, percentOf, splitScopes } from "../../lib/emissions";
-import { formatTonnes } from "../../lib/format";
-import { en } from "../../content/en";
+import { formatAmount, formatTonnes } from "../../lib/format";
+import { intlLocale } from "../../lib/i18n";
+import { useLanguage } from "../LanguageProvider";
 import RegistryPanels from "./RegistryPanels";
 
 type TypologyFilter = "ALL" | Typology;
@@ -30,7 +34,9 @@ function shareLabel(share: number): string {
 }
 
 export default function RegistryWorkspace() {
-  const copy = en.registry;
+  const { lang, copy: ui } = useLanguage();
+  const copy = ui.registry;
+  const locale = intlLocale(lang);
   const [typology, setTypology] = useState<TypologyFilter>("ALL");
   const [status, setStatus] = useState<StatusFilter>("ALL");
   const [scale, setScale] = useState<ScaleFilter>("ALL");
@@ -69,7 +75,13 @@ export default function RegistryWorkspace() {
     }
   }
 
-  function pillRow<T extends string>(label: string, options: T[], value: T, onPick: (v: T) => void) {
+  function pillRow<T extends string>(
+    label: string,
+    options: T[],
+    value: T,
+    onPick: (v: T) => void,
+    format?: (value: T) => string,
+  ) {
     return (
       <div className="reg-filters-row">
         <span className="t-label-code">{label}</span>
@@ -82,7 +94,7 @@ export default function RegistryWorkspace() {
               aria-pressed={value === option}
               onClick={() => onPick(option)}
             >
-              {option}
+              {format ? format(option) : option}
             </button>
           ))}
         </div>
@@ -99,7 +111,7 @@ export default function RegistryWorkspace() {
           <p className="reg-intro">{copy.intro}</p>
           <div className="reg-pool">
             <p className="t-label-caps">{copy.poolLabel}</p>
-            <p className="tnum reg-pool-value">{formatTonnes(poolMean)}</p>
+            <p className="tnum reg-pool-value">{formatTonnes(poolMean, locale)}</p>
             <p className="t-label-code">{copy.poolUnit}</p>
             <p className="t-label-code">
               {copy.sbtiLabel}: {copy.sbtiValue} ({copy.sbtiIllustrative})
@@ -111,16 +123,34 @@ export default function RegistryWorkspace() {
           </div>
         </div>
         <p>
-          <span className="cm-demo">{en.common.illustrativeSample}</span>
+          <span className="cm-demo">{ui.common.illustrativeSample}</span>
         </p>
       </section>
 
       <section className="cm-container" aria-label={copy.title}>
         <details className="cm-disclosure">
           <summary className="t-label-caps">{copy.filtersToggle}</summary>
-          {pillRow<TypologyFilter>(copy.filterTypology, ["ALL", "ARCHITECTURE", "DIGITAL LAB", "EDITORIAL", "INDUSTRIAL"], typology, setTypology)}
-          {pillRow<StatusFilter>(copy.filterStatus, ["ALL", ...copy.tiers], status, setStatus)}
-          {pillRow<ScaleFilter>(copy.filterScale, ["ALL", ...copy.scales], scale, setScale)}
+          {pillRow<TypologyFilter>(
+            copy.filterTypology,
+            ["ALL", ...typologyValues],
+            typology,
+            setTypology,
+            (value) => (value === "ALL" ? copy.all : copy.typologyLabels[value]),
+          )}
+          {pillRow<StatusFilter>(
+            copy.filterStatus,
+            ["ALL", ...tierValues],
+            status,
+            setStatus,
+            (value) => (value === "ALL" ? copy.all : copy.tierLabels[value]),
+          )}
+          {pillRow<ScaleFilter>(
+            copy.filterScale,
+            ["ALL", ...scaleValues],
+            scale,
+            setScale,
+            (value) => (value === "ALL" ? copy.all : value),
+          )}
         </details>
 
         <div className="cm-table-wrap">
@@ -165,11 +195,11 @@ export default function RegistryWorkspace() {
                         <p className="tnum">{row.studio.code}</p>
                         <p>{row.studio.practice}</p>
                       </td>
-                      <td>{row.studio.classification}</td>
-                      <td className="tnum">{row.studio.fte}</td>
-                      <td className="tnum">{formatTonnes(row.studio.grossTonnes)} t</td>
+                      <td>{copy.typologyLabels[row.studio.classification]}</td>
+                      <td className="tnum">{formatAmount(row.studio.fte, locale)}</td>
+                      <td className="tnum">{formatTonnes(row.studio.grossTonnes, locale)} t</td>
                       <td>
-                        <p className="tnum">{formatTonnes(row.intensity)}</p>
+                        <p className="tnum">{formatTonnes(row.intensity, locale)}</p>
                         <span className="reg-bar" aria-hidden="true">
                           <span style={{ width: `${(row.intensity / maxIntensity) * 100}%` }} />
                         </span>
@@ -178,7 +208,7 @@ export default function RegistryWorkspace() {
                         {shareLabel(row.studio.shares[0])} : {shareLabel(row.studio.shares[1])} :{" "}
                         {shareLabel(row.studio.shares[2])}
                       </td>
-                      <td>{row.studio.tier}</td>
+                      <td>{copy.tierLabels[row.studio.tier]}</td>
                       <td>
                         <button
                           type="button"
@@ -198,8 +228,8 @@ export default function RegistryWorkspace() {
                     main,
                     <tr key={`${row.studio.code}-detail`}>
                       <td colSpan={8} className="tnum">
-                        S1 {formatTonnes(split.s1)} t · S2 {formatTonnes(split.s2)} t · S3{" "}
-                        {formatTonnes(split.s3)} t
+                        S1 {formatTonnes(split.s1, locale)} t · S2 {formatTonnes(split.s2, locale)} t · S3{" "}
+                        {formatTonnes(split.s3, locale)} t
                       </td>
                     </tr>,
                   ];
@@ -209,7 +239,7 @@ export default function RegistryWorkspace() {
           </table>
         </div>
         <p className="t-label-code">
-          {copy.showing} {String(rows.length).padStart(2, "0")} OF{" "}
+          {copy.showing} {String(rows.length).padStart(2, "0")} {copy.of}{" "}
           {String(sampleStudios.length).padStart(2, "0")} {copy.sampleRecords}
         </p>
       </section>

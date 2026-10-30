@@ -1,5 +1,7 @@
 // Dossier parameters: interval, frameworks, headcount, integrity, formats.
-import { en } from "../../content/en";
+"use client";
+
+import { useLanguage } from "../LanguageProvider";
 import NumberInput from "../ui/NumberInput";
 
 export type ExportFormat = "PDF" | "JSON" | "CSV" | "XBRL";
@@ -31,12 +33,13 @@ export default function DossierParams({
   onFormat,
   onCompile,
 }: DossierParamsProps) {
-  const copy = en.dossier;
+  const { copy: ui } = useLanguage();
+  const copy = ui.dossier;
   return (
     <div className="dossier-params">
       <div className="dossier-params-head">
         <p className="t-label-caps">
-          SECTION 01 {copy.paramsTitle}
+          {ui.common.section} 01 {copy.paramsTitle}
         </p>
         <span className="t-label-code">{copy.ledgerRef}</span>
       </div>

@@ -1,17 +1,19 @@
-// Mobile-only bottom tab bar with in-page anchors (≤767px via CSS).
-import { en } from "../../content/en";
+// Mobile tab bar for the Struk page: jumps to receipt, inputs, analysis, factors.
+"use client";
 
-const ITEMS = [
-  { label: en.struk.tabbar.receipt, href: "#struk-receipt" },
-  { label: en.struk.tabbar.ledger, href: "#struk-inputs" },
-  { label: en.struk.tabbar.analysis, href: "#struk-analysis" },
-  { label: en.struk.tabbar.scopes, href: "#struk-factors" },
-];
+import { useLanguage } from "../LanguageProvider";
 
 export default function MobileTabBar() {
+  const { copy: ui } = useLanguage();
+  const items = [
+    { label: ui.struk.tabbar.receipt, href: "#struk-receipt" },
+    { label: ui.struk.tabbar.ledger, href: "#struk-inputs" },
+    { label: ui.struk.tabbar.analysis, href: "#struk-analysis" },
+    { label: ui.struk.tabbar.scopes, href: "#struk-factors" },
+  ];
   return (
-    <nav className="struk-tabbar" aria-label={en.struk.tabbar.receipt}>
-      {ITEMS.map((item) => (
+    <nav className="struk-tabbar" aria-label={ui.struk.tabbar.receipt}>
+      {items.map((item) => (
         <a key={item.href} href={item.href}>
           {item.label}
         </a>

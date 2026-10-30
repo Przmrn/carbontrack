@@ -13,6 +13,7 @@
 @import "../styles/methodology.css";
 @import "../styles/registry.css";
 @import "../styles/glossary.css";
+@import "../styles/dhl.css";
 
 body {
   background: var(--surface);

@@ -5,7 +5,7 @@ import { useEffect, useMemo, useState } from "react";
 import { calculatorFactors, strukFactors } from "../../data/factors";
 import { buildFactorCsv, buildFactorJson } from "../../lib/export";
 import { sha256Hex, shortHash } from "../../lib/checksum";
-import { en } from "../../content/en";
+import { useLanguage } from "../LanguageProvider";
 import MethodologyAside from "./MethodologyAside";
 import MethodologySections from "./MethodologySections";
 
@@ -22,7 +22,8 @@ function download(text: string, filename: string, mime: string): void {
 }
 
 export default function MethodologyWorkspace() {
-  const copy = en.methodology;
+  const { copy: ui } = useLanguage();
+  const copy = ui.methodology;
   const [storedHash, setStoredHash] = useState<string>("…");
   const [verdict, setVerdict] = useState<string | null>(null);
 

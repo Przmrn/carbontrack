@@ -6,7 +6,6 @@ import { buildDossierEntries } from "../../lib/dossier";
 import { totalByScope } from "../../lib/emissions";
 import { buildCsv, buildJson } from "../../lib/export";
 import { sha256Hex, shortHash } from "../../lib/checksum";
-import { en } from "../../content/en";
 import { useLanguage } from "../LanguageProvider";
 import { useCalculatorStore } from "../calculator/CalculatorStore";
 import DossierParams, { type ExportFormat } from "./DossierParams";
@@ -37,7 +36,7 @@ export default function DossierWorkspace() {
   const totals = useMemo(() => totalByScope(entries), [entries]);
   const s12 = totals.s1 + totals.s2;
   const intensity = headcount > 0 ? totals.total / headcount : null;
-  const selectedFrameworks = en.dossier.frameworks
+  const selectedFrameworks = ui.dossier.frameworks
     .filter((_, index) => frameworks[index] ?? false)
     .map((framework) => framework.name);
   const json = useMemo(
@@ -74,7 +73,7 @@ export default function DossierWorkspace() {
     setFrameworks((prev) => prev.map((on, i) => (i === index ? !on : on)));
   }
 
-  const copy = en.dossier;
+  const copy = ui.dossier;
   return (
     <div className="dossier-root">
       <section className="cm-container dossier-hero">

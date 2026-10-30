@@ -1,11 +1,16 @@
 // Intelligence panels and spread histogram, computed from the sample only.
+"use client";
+
 import { intensityPerFte } from "../../lib/emissions";
 import { formatAmount, formatTonnes } from "../../lib/format";
 import { sampleStudios } from "../../data/sample-registry";
-import { en } from "../../content/en";
+import { intlLocale } from "../../lib/i18n";
+import { useLanguage } from "../LanguageProvider";
 
 export default function RegistryPanels() {
-  const copy = en.registry;
+  const { lang, copy: ui } = useLanguage();
+  const copy = ui.registry;
+  const locale = intlLocale(lang);
   const intensities = sampleStudios.map((studio) =>
     intensityPerFte(studio.grossTonnes, studio.fte),
   );
@@ -24,14 +29,14 @@ export default function RegistryPanels() {
       <div className="reg-cards">
         <div>
           <p className="t-label-caps">{copy.meanLabel}</p>
-          <p className="tnum reg-big">{formatTonnes(mean)} t</p>
+          <p className="tnum reg-big">{formatTonnes(mean, locale)} t</p>
           <p>
-            {copy.rangeLabel}: {formatTonnes(min)} – {formatTonnes(max)} t
+            {copy.rangeLabel}: {formatTonnes(min, locale)} – {formatTonnes(max, locale)} t
           </p>
         </div>
         <div>
           <p className="t-label-caps">{copy.s3Label}</p>
-          <p className="tnum reg-big">{formatAmount(meanS3 * 100)}%</p>
+          <p className="tnum reg-big">{formatAmount(meanS3 * 100, locale)}%</p>
           <p>
             {copy.belowLabel}: {below} / {sampleStudios.length}
           </p>
@@ -50,7 +55,7 @@ export default function RegistryPanels() {
         className="reg-hist"
         viewBox="0 0 500 220"
         role="img"
-        aria-label={`${copy.spreadTitle}. ${copy.medianLabel} ${formatTonnes(median)}`}
+        aria-label={`${copy.spreadTitle}. ${copy.medianLabel} ${formatTonnes(median, locale)}`}
       >
         {intensities.map((value, index) => {
           const width = 500 / intensities.length;
@@ -67,7 +72,7 @@ export default function RegistryPanels() {
           );
         })}
         <text x={4} y={200} fontSize={10}>
-          {copy.medianLabel} {formatTonnes(median)}
+          {copy.medianLabel} {formatTonnes(median, locale)}
         </text>
       </svg>
     </section>

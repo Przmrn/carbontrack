@@ -4,7 +4,7 @@
 import type { ActivityRow } from "../../lib/calculator";
 import { statusForFactor } from "../../lib/export";
 import { formatFactor } from "../../lib/format";
-import { intlLocale } from "../../lib/i18n";
+import { factorLabel, intlLocale } from "../../lib/i18n";
 import { useLanguage } from "../LanguageProvider";
 
 export interface DetailLine {
@@ -42,7 +42,7 @@ export default function CalculationDetail({ lines, reference }: CalculationDetai
                 <dd>
                   {line.row.factor === null
                     ? detail.notAvailable
-                    : `${line.row.factor.label} · ${formatFactor(line.row.factor.value, locale)} ${line.row.factor.unit}`}
+                    : `${factorLabel(line.row.factor, lang)} · ${formatFactor(line.row.factor.value, locale)} ${line.row.factor.unit}`}
                 </dd>
               </div>
               <div>
